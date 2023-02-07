@@ -40,8 +40,6 @@ func (c Consumer) Start() error {
 
 			continue
 		}
-
-		return nil
 	}
 }
 
