@@ -3,6 +3,7 @@ package storage
 import (
 	"articles-tbot/lib/e"
 	"crypto/sha1"
+	"errors"
 	"fmt"
 	"io"
 )
@@ -13,6 +14,8 @@ type Storage interface {
 	Remove(p *Page) error
 	IsExist(p *Page) (bool, error)
 }
+
+var ErrNoSavePages = errors.New("no saved pages")
 
 type Page struct {
 	URL      string
