@@ -1,6 +1,7 @@
 package files
 
 import (
+	"articles-tbot/files_storage"
 	"articles-tbot/lib/e"
 	"articles-tbot/storage"
 	"encoding/gob"
@@ -16,8 +17,6 @@ type Storage struct {
 	basePath string
 }
 
-const defaultPerm = 0774
-
 func New(basePath string) Storage {
 	return Storage{basePath: basePath}
 }
@@ -27,7 +26,7 @@ func (s Storage) Save(page *storage.Page) (err error) {
 
 	fPath := filepath.Join(s.basePath, page.UserName)
 
-	if err := os.MkdirAll(fPath, defaultPerm); err != nil {
+	if err := os.MkdirAll(fPath, files_storage.DefaultPerm); err != nil {
 		return err
 	}
 

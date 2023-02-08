@@ -1,11 +1,14 @@
 package telegram
 
 import (
+	"articles-tbot/files_storage"
 	"articles-tbot/lib/e"
 	"articles-tbot/storage"
 	"errors"
 	"log"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -30,7 +33,7 @@ func (p *Processor) doCmd(text string, chatID int, username string) error {
 	case HelpCmd:
 		return p.sendHelp(chatID)
 	case StartCmd:
-		return p.sendHello(chatID)
+		return p.startConversation(chatID, username)
 	default:
 		return p.tg.SendMessage(chatID, msgUnknownCommand)
 	}
@@ -87,9 +90,23 @@ func (p *Processor) sendHelp(chatID int) error {
 	return p.tg.SendMessage(chatID, msgHelp)
 }
 
-func (p *Processor) sendHello(chatID int) error {
-
+func (p *Processor) startConversation(chatID int, username string) error {
+	if err := createUserDir(username); err != nil {
+		return err
+	}
 	return p.tg.SendMessage(chatID, msgHello)
+}
+
+func createUserDir(username string) (err error) {
+	defer func() { err = e.WrapIfErr("can't create user dir", err) }()
+
+	fPath := filepath.Join(files_storage.StoragePath, username)
+
+	if err := os.Mkdir(fPath, files_storage.DefaultPerm); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func isAddCmd(text string) bool {
