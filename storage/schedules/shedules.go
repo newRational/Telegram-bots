@@ -17,13 +17,17 @@ func New(basePath string) Storage {
 	return Storage{basePath: basePath}
 }
 
-func (s Storage) PickSchedule(userName, dayName string) (page *storage.Page, err error) {
+func (s Storage) PickSchedule(dayName, userName string) (page *storage.Page, err error) {
 	page = &storage.Page{
 		Content:  "",
 		UserName: userName,
 	}
 
-	userStudyGroupPath := filepath.Join(schedules_storage.StoragePath, userName+".txt")
+	userStudyGroupPath := filepath.Join(
+		schedules_storage.StoragePath,
+		schedules_storage.UserStudyGroupsDir,
+		userName+".txt",
+	)
 
 	studyGroup, err := os.ReadFile(userStudyGroupPath)
 	if err != nil {
@@ -34,7 +38,7 @@ func (s Storage) PickSchedule(userName, dayName string) (page *storage.Page, err
 		schedules_storage.StoragePath,
 		string(studyGroup),
 		schedules_storage.ByDaysDir,
-		dayName,
+		dayName+".txt",
 	)
 
 	daySchedule, err := os.ReadFile(studyGroupSchedulePath)

@@ -16,7 +16,7 @@ type ArticlesStorage interface {
 }
 
 type ScheduleStorage interface {
-	PickSchedule(userName, dayName string) (*Page, error)
+	PickSchedule(dayName, userName string) (*Page, error)
 }
 
 var ErrNoSavePages = errors.New("no saved pages")

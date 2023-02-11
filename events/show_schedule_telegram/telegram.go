@@ -8,10 +8,16 @@ import (
 	"errors"
 )
 
-type Processor struct {
+type ArticlesProcessor struct {
 	tg      *telegram.Client
 	offset  int
 	storage storage.ArticlesStorage
+}
+
+type ScheduleProcessor struct {
+	tg      *telegram.Client
+	offset  int
+	storage storage.ScheduleStorage
 }
 
 type Meta struct {
@@ -24,14 +30,14 @@ var (
 	ErrUnknownMeta      = errors.New("unknown meta type")
 )
 
-func New(client *telegram.Client, storage storage.ArticlesStorage) *Processor {
-	return &Processor{
+func New(client *telegram.Client, storage storage.ScheduleStorage) *ScheduleProcessor {
+	return &ScheduleProcessor{
 		tg:      client,
 		storage: storage,
 	}
 }
 
-func (p *Processor) Fetch(limit int) ([]events.Event, error) {
+func (p *ScheduleProcessor) Fetch(limit int) ([]events.Event, error) {
 	updates, err := p.tg.Updates(p.offset, limit)
 	if err != nil {
 		return nil, e.Wrap("can't get events", err)
@@ -52,7 +58,7 @@ func (p *Processor) Fetch(limit int) ([]events.Event, error) {
 	return res, nil
 }
 
-func (p *Processor) Process(event events.Event) error {
+func (p *ScheduleProcessor) Process(event events.Event) error {
 	switch event.Type {
 	case events.Message:
 		return p.processMessage(event)
@@ -61,7 +67,7 @@ func (p *Processor) Process(event events.Event) error {
 	}
 }
 
-func (p *Processor) processMessage(event events.Event) error {
+func (p *ScheduleProcessor) processMessage(event events.Event) error {
 	const msgCantProcess = "can't process message"
 
 	meta, err := meta(event)
