@@ -1,0 +1,4 @@
+github.com/ConvertAPI/convertapi-go v0.0.0-20220922061013-948c526c7a7b h1:jV+JWnLoO7PO6HXpPqbqtIMcmMiXRhLmFmcqZGGqQcU=
+github.com/ConvertAPI/convertapi-go v0.0.0-20220922061013-948c526c7a7b/go.mod h1:ufNsOwGfoCJJk4frfGORSNzdC4ElwxnN2NtHa9KrsIM=
+github.com/ledongthuc/pdf v0.0.0-20220302134840-0c2507a12d80 h1:6Yzfa6GP0rIo/kULo2bwGEkFvCePZ3qHDDTC3/J9Swo=
+github.com/ledongthuc/pdf v0.0.0-20220302134840-0c2507a12d80/go.mod h1:imJHygn/1yfhB7XSJJKlFZKl/J+dCPAknuiaGOshXAs=
