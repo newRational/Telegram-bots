@@ -68,9 +68,7 @@ func (c *Client) SendMessage(chatID int, text string) error {
 }
 
 func (c *Client) doRequest(method string, query url.Values) (data []byte, err error) {
-	defer func() {
-		err = e.WrapIfErr("can't do request", err)
-	}()
+	defer func() { err = e.WrapIfErr("can't do request", err) }()
 
 	u := url.URL{
 		Scheme: "https",

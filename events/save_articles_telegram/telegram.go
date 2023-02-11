@@ -1,4 +1,4 @@
-package telegram
+package save_articles_telegram
 
 import (
 	"articles-tbot/clients/telegram"
@@ -11,7 +11,7 @@ import (
 type Processor struct {
 	tg      *telegram.Client
 	offset  int
-	storage storage.Storage
+	storage storage.ArticlesStorage
 }
 
 type Meta struct {
@@ -24,7 +24,7 @@ var (
 	ErrUnknownMeta      = errors.New("unknown meta type")
 )
 
-func New(client *telegram.Client, storage storage.Storage) *Processor {
+func New(client *telegram.Client, storage storage.ArticlesStorage) *Processor {
 	return &Processor{
 		tg:      client,
 		storage: storage,
@@ -110,7 +110,7 @@ func fetchText(upd telegram.Update) string {
 	return upd.Message.Text
 }
 
-func fetchType(upd telegram.Update) events.Type {
+func fetchType(upd telegram.Update) events.EventType {
 	if upd.Message == nil {
 		return events.Unknown
 	}

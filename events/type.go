@@ -8,15 +8,15 @@ type Processor interface {
 	Process(e Event) error
 }
 
-type Type int
+type EventType int
 
 const (
-	Unknown Type = iota
+	Unknown EventType = iota
 	Message
 )
 
 type Event struct {
-	Type Type
+	Type EventType
 	Text string
 	Meta interface{}
 }

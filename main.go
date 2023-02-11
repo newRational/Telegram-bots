@@ -3,22 +3,22 @@ package main
 import (
 	tgClient "articles-tbot/clients/telegram"
 	event_consumer "articles-tbot/consumer/event-consumer"
-	"articles-tbot/events/telegram"
-	"articles-tbot/files_storage"
+	"articles-tbot/events/save_articles_telegram"
+	"articles-tbot/schedules_storage"
 	"articles-tbot/storage/files"
 	"flag"
 	"log"
 )
 
 const (
-	tgBotHost = "api.telegram.org"
+	tgBotHost = "api.save_articles_telegram.org"
 	batchSize = 100
 )
 
 func main() {
-	eventsProcessor := telegram.New(
+	eventsProcessor := save_articles_telegram.New(
 		tgClient.New(tgBotHost, mustToken()),
-		files.New(files_storage.StoragePath),
+		files.New(schedules_storage.StoragePath),
 	)
 
 	log.Print("service has been started")
@@ -32,9 +32,9 @@ func main() {
 
 func mustToken() string {
 	token := flag.String(
-		"tg-bot-token",
+		"t",
 		"",
-		"token for access to telegram bot",
+		"token for access to save_articles_telegram bot",
 	)
 
 	flag.Parse()

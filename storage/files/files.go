@@ -102,7 +102,6 @@ func (s Storage) IsExist(p *storage.Page) (bool, error) {
 		return false, nil
 	case err != nil:
 		msg := fmt.Sprintf("can't check if file %s exists", path)
-
 		return false, e.Wrap(msg, err)
 	}
 

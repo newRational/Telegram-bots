@@ -1,4 +1,4 @@
-package telegram
+package save_articles_telegram
 
 const msgHelp = `I can save and keep your pages. Also I can offer you them to read.
 

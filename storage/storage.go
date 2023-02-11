@@ -8,24 +8,28 @@ import (
 	"io"
 )
 
-type Storage interface {
+type ArticlesStorage interface {
 	Save(p *Page) error
 	PickRandom(userName string) (*Page, error)
 	Remove(p *Page) error
 	IsExist(p *Page) (bool, error)
 }
 
+type ScheduleStorage interface {
+	PickSchedule(userName, dayName string) (*Page, error)
+}
+
 var ErrNoSavePages = errors.New("no saved pages")
 
 type Page struct {
-	URL      string
+	Content  string
 	UserName string
 }
 
 func (p Page) Hash() (string, error) {
 	h := sha1.New()
 
-	if _, err := io.WriteString(h, p.URL); err != nil {
+	if _, err := io.WriteString(h, p.Content); err != nil {
 		return "", e.Wrap("can't calculate hash", err)
 	}
 
